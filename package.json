@@ -9,10 +9,9 @@
   "proxy": "http://localhost:3000/",
   "scripts": {
     "server": "node server/app.js",
-    "client": "react-scripts start",
+    "client": "node client/scripts/build.js",
     "start": "concurrently \"nodemon server/app.js\" \"npm run client\"",
-    "build": "react-scripts build",
-    "seed": "node scripts/seedDB.js",
+    "build": "node client/scripts/build.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "installDeps": "yarn && cd client && yarn && cd ../server && yarn"
   },
