@@ -11,7 +11,7 @@
     "server": "node server/app.js",
     "client": "node client/scripts/build.js",
     "start": "concurrently \"nodemon server/app.js\" \"npm run client\"",
-    "build": "node client/scripts/build.js",
+    "build": "concurrently \"node client/scripts/install.js\" \"node client/scripts/build.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "installDeps": "yarn && cd client && yarn && cd ../server && yarn"
   },
