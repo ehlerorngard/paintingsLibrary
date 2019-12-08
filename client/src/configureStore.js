@@ -1,0 +1,45 @@
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost'
+import reducer from "./utils/reducer.js";
+import queries from './utils/queries.js'
+
+
+const cache = new InMemoryCache();
+const link = new HttpLink({
+  uri: 'http://localhost:4000/graphql'
+});
+
+const apollo = new ApolloClient({
+  cache,
+  link,
+})
+
+apollo.query({query: queries.getPaintings}).then(result => {
+  console.log(result.data.paintings)
+})
+
+function configureStore(initialState = {apollo: apollo}) {
+
+  const enhancers = [
+    // applyMiddleware(apollo.middleware),
+  ];
+
+  const reduxDevTools =
+    (process.env.NODE_ENV !== 'production' &&
+    typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+          shouldHotReload: false,
+        })
+      : compose);
+
+  const store = createStore(
+    reducer,
+    {...initialState},
+    reduxDevTools(...enhancers)
+  );
+
+  return store;
+}
+
+export { apollo, configureStore }

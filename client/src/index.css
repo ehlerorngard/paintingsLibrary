@@ -1,0 +1,186 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.header {
+	font-family: 'Baskervville', sans-serif;
+	color: rgba(46, 46, 46, 1);
+	position: relative;
+	left: 0;
+	top: 0;
+	display: block;
+	margin: 0 0 36px 0;
+}
+.Footer {
+	position: fixed;
+	bottom: 0;
+}
+
+.r1 {
+	font-size: 1rem;
+}
+.r1half {
+	font-size: 1.5rem;
+}
+.r2 {
+	font-size: 2rem;
+}
+.r3 {
+	font-size: 3rem;
+}
+.r4 {
+	font-size: 4rem;
+}
+
+.italics {
+	font-style: italic;
+}
+.Oswald {
+	font-family: 'Oswald';
+	color: rgba(46, 82, 86, 1);
+}
+.clickable_text {
+	color: rgba(94, 94, 94, 1);
+}
+.clickable_text:hover {
+	color: rgba(46, 46, 46, 1);
+}
+.vertSpace {
+	width: 100%;
+	height: 2rem;
+	display: block;
+}
+
+.col_whole {
+	width: 100%;
+	height: 100%;
+}
+.col_half {
+	width: 50%;
+	height: 100%;
+}
+.col_third {
+	width: 33.3%;
+	height: 100%;
+	display: inline-block;
+}
+.col_quarter {
+	width: 25%;
+	height: 100%;
+}
+.col_sixth {
+	width: 16.6%;
+	height: 100%;
+}
+.col_eighth {
+	width: 12.5%;
+	height: 100%;
+}
+.col_2thirds {
+	width: 66.6%;
+	height: 100%;
+	display: inline-block;
+}
+.col_3quarters {
+	width: 75%;
+	height: 100%;
+}
+
+.row_whole {
+	height: 100%;
+	width: 100%;
+}
+.row_half {
+	height: 50%;
+	width: 100%;
+}
+.row_third {
+	height: 33.3%;
+	width: 100%;
+}
+.row_quarter {
+	height: 25%;
+	width: 100%;
+}
+.row_sixth {
+	height: 16.6%;
+	width: 100%;
+}
+.row_eighth {
+	height: 12.5%;
+	width: 100%;
+}
+.row_2thirds {
+	height: 66.6%;
+	width: 100%;
+	top: 0;
+	position: absolute;
+
+}
+.row_3quarters {
+	height: 75%;
+	width: 100%;
+}
+
+.paintingBox:hover {
+	cursor: pointer;
+}
+
+.button {
+	background-color: rgb(27,78,139, .5);
+	transition: background-color .2s;
+}
+.button:hover {
+	cursor:  pointer;
+	background-color: rgb(27,78,139, 1);
+}
+.App {
+	width: 100vw;
+	height: 100vh;
+}
+.cartographer {
+	width: 100vw;
+	height: 100vh;
+}
+.paintingsWrapper {
+	width: 100vw;
+	height: 100vh;
+}
+.paintingsMain {
+	width: 100%;
+	height: 75%;
+	overflow-y: auto;
+}
+.paintingListMain {
+	width: 100%;
+	height: 100%;
+}
+.pList {
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+}
+.PaintingDisplay {
+	width: auto;
+	position: absolute;
+	margin: auto;
+	height: 60vh;
+}
+.index {
+	max-height: 75vh !important;
+}
