@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/ehlerorngard/paintingsLibrary.git"
   },
-  "homepage": "https://github.com/ehlerorngard/paintingsLibrary.git"
+  "homepage": "https://github.com/ehlerorngard/paintingsLibrary.git",
+  "dependencies": {
+    "react-scripts": "^3.3.0"
+  }
 }
