@@ -10,7 +10,7 @@ dotenv.config()
 const app = express()
 
 // ====== CORS ======
-const whitelist = ['http://localhost:3000', ]
+const whitelist = [(process.env.NODE_ENV === 'production') ? process.env.PRODUCTION_URI : process.env.DEVELOPMENT_URI]
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
