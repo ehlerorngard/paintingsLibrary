@@ -6,7 +6,7 @@
     "node": "10.15.3"
   },
   "main": "server/app.js",
-  "proxy": "https://https://paintings-library.herokuapp.com/",
+  "proxy": "https://paintings-library.herokuapp.com/",
   "scripts": {
     "server": "node server/app.js",
     "client": "node client/scripts/start.js",
@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/ehlerorngard/paintingsLibrary.git"
   },
-  "homepage": "https://github.com/ehlerorngard/paintingsLibrary.git",
+  "homepage": "https://paintings-library.herokuapp.com/",
   "dependencies": {
     "nodemon": "^2.0.1",
     "concurrently": "^3.6.1",
