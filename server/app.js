@@ -10,7 +10,8 @@ dotenv.config()
 const app = express()
 
 // ====== CORS ======
-const whitelist = [(process.env.NODE_ENV === 'production') ? process.env.PRODUCTION_URI : process.env.DEVELOPMENT_URI]
+const uri = (process.env.NODE_ENV === 'production') ? process.env.PRODUCTION_URI : process.env.DEVELOPMENT_URI;
+const whitelist = [uri, ]
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -23,7 +24,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-
+console.log('mongo...', process.env.MONGO_DB_URI)
 // ====== mongoose ======
 mongoose
 	.connect(process.env.MONGO_DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -9,8 +9,8 @@
   "proxy": "https://https://paintings-library.herokuapp.com/",
   "scripts": {
     "server": "node server/app.js",
-    "client": "node client/scripts/build.js",
-    "start": "concurrently \"nodemon server/app.js\" \"npm run client\"",
+    "client": "node client/scripts/start.js",
+    "start": "concurrently \"node server/start.js\" \"npm run client\"",
     "build": "node client/scripts/build.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "installDeps": "yarn && cd client && yarn && cd ../server && yarn"
@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^3.5.1",
+    "concurrently": "^3.6.1",
     "nodemon": "^2.0.1"
   },
   "repository": {
@@ -30,7 +30,6 @@
   },
   "homepage": "https://github.com/ehlerorngard/paintingsLibrary.git",
   "dependencies": {
-    "concurrently": "^3.5.1",
     "nodemon": "^2.0.1",
     "@material-ui/core": "^4.7.1",
     "@testing-library/jest-dom": "^4.2.4",
