@@ -12,6 +12,7 @@ const app = express()
 
 process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'development'
 
+// ====== server static ======
 app.use(express.static((process.env.NODE_ENV === 'production') ? 'build' : 'public'));
 
 // ====== CORS ======
@@ -30,10 +31,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-console.log(chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV))
-console.log(chalk.yellow('URI'), chalk.cyan(uri))
-console.log(chalk.yellow('MONGO_DB_URI'), chalk.cyan(process.env.MONGO_DB_URI))
-console.log(chalk.yellow('whitelist'), chalk.cyan(whitelist))
 
 // ====== mongoose ======
 mongoose
@@ -41,15 +38,17 @@ mongoose
 	.then(() => console.log(`mongoose connected to the database ${chalk.green('paintings_library')}`))
 	.catch(err => console.log(err))
 
+// ====== GraphQL API ======
 app.use('/graphql', express_graphql({
-	schema: schema,  // in ES6 can just be schema since names are the same
+	schema: schema,
 	graphiql: true,
 	pretty: true,
 }))
 
-const server_port = (process.env.NODE_ENV === 'production') ? process.env.PORT : 4000;
 
 // ====== start server ======
+const server_port = (process.env.NODE_ENV === 'production') ? process.env.PORT : 4000;
+
 app.listen(server_port, () => {
 	console.log(`PaintingsLibrary express server listening on port ${server_port}`)
 })

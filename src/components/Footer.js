@@ -5,17 +5,10 @@ import styles from '../styles.js'
 
 class Footer extends Component {
 
-	openOptions = () => {
-		console.log("button clicked!")
-	}
-
 	render() {
-		console.log('props from Footer:', this.props)
-
-
 		return (
 			<div className="Footer">
-				<div style={styles.button} className='button' onClick={this.openOptions}>
+				<div style={styles.button} className='button' onClick={() => {})}>
 					<div styles={styles.buttonText}>options</div>
 				</div>
 			</div>

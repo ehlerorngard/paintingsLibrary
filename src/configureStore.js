@@ -4,7 +4,6 @@ import reducer from "./utils/reducer.js";
 import queries from './utils/queries.js';
 
 const cache = new InMemoryCache();
-console.log('in configureStore, NODE_ENV:', process.env.NODE_ENV);
 const baseuri = (process.env.NODE_ENV === 'production') ? 'https://paintings-library.herokuapp.com' : 'http://localhost:4000';
 const uri = `${baseuri}/graphql`;
 const link = new HttpLink({
@@ -14,10 +13,6 @@ const link = new HttpLink({
 const apollo = new ApolloClient({
   cache,
   link,
-})
-
-apollo.query({query: queries.getPaintings}).then(result => {
-  console.log(result.data.paintings)
 })
 
 function configureStore(initialState = {apollo: apollo}) {

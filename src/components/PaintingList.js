@@ -16,7 +16,6 @@ class PaintingList extends Component {
 	}
 
 	select = (pId) => {
-		console.log('click registered')
 		updateStore({ selected_painting: pId })(this.props.dispatch)
 	}
 
@@ -39,8 +38,6 @@ class PaintingList extends Component {
 	}
 
 	render() {
-		console.log(this.props)
-
 		const textA = (pId) => (this.props.selected_painting === pId)
 			? { fontSize: '1.3rem', transition: 'font-size .25s'}
 			: { fontSize: '1rem', transition: 'font-size .25s'}
