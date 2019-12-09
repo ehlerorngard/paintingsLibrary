@@ -4,6 +4,6 @@ This is a simple app that implements GraphQL by leveraging Apollo on the client 
 
 
 
-### *View the app deployed* **[paintingsLibrary](https://paintings-library.herokuapp.com/)**
+### *View the app deployed:* **[paintingsLibrary](https://paintings-library.herokuapp.com/)**
 
-### *NOTE:  the frontend is unfinished and under current construction*
+#### *NOTE:  the frontend is unfinished and under current construction*
