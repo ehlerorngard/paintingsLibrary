@@ -5,8 +5,11 @@ import queries from './utils/queries.js'
 
 
 const cache = new InMemoryCache();
+console.log('ENV ________ ', process.env.NODE_ENV)
+const baseuri = (process.env.NODE_ENV === 'production') ? process.env.PRODUCTION_URI : 'http://localhost:4000';
+const uri = `${baseuri}/graphql`
 const link = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
+  uri: uri,
 });
 
 const apollo = new ApolloClient({
