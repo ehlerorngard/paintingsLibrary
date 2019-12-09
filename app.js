@@ -47,7 +47,9 @@ app.use('/graphql', express_graphql({
 	pretty: true,
 }))
 
+const server_port = (process.env.NODE_ENV === 'production') ? process.env.PORT : 4000;
+
 // ====== start server ======
-app.listen(4000, () => {
-	console.log('PaintingsLibrary express server listening on port 4000')
+app.listen(server_port, () => {
+	console.log(`PaintingsLibrary express server listening on port ${server_port}`)
 })
