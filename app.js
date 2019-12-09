@@ -10,6 +10,10 @@ dotenv.config()
 
 const app = express()
 
+process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'development'
+
+app.use(express.static((process.env.NODE_ENV === 'production') ? 'build' : 'public'));
+
 // ====== CORS ======
 const uri = (process.env.NODE_ENV === 'production') ? ['https://paintings-library.herokuapp.com'] : ['http://localhost:4000', 'http://localhost:3000', 'http://localhost:4001'];
 const whitelist = [...uri, undefined]
