@@ -37,7 +37,8 @@ function configureStore(initialState = {apollo: apollo}) {
   const store = createStore(
     reducer,
     {...initialState},
-    reduxDevTools(...enhancers)
+    // reduxDevTools(...enhancers)
+    ...enhancers,
   );
 
   return store;
