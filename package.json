@@ -9,18 +9,14 @@
   "proxy": "https://paintings-library.herokuapp.com/",
   "scripts": {
     "server": "node server/app.js",
-    "client": "node client/scripts/start.js",
-    "start": "concurrently \"node server/start.js\" \"npm run client\"",
-    "build": "node client/scripts/build.js",
+    "client": "concurrently \"node server/start.js\" \"npm run client\"",
+    "start": "node start.js",
+    "build": "node build.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "installDeps": "yarn && cd client && yarn && cd ../server && yarn"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "concurrently": "^3.6.1",
-    "nodemon": "^2.0.1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ehlerorngard/paintingsLibrary.git"

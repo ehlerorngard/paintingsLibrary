@@ -1,13 +1,12 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
+import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost'
 import reducer from "./utils/reducer.js";
-import queries from './utils/queries.js';
+import queries from './utils/queries.js'
+
 
 const cache = new InMemoryCache();
-const baseuri = (process.env.NODE_ENV === 'production') ? 'https://paintings-library.herokuapp.com/' : 'http://localhost:4000';
-const uri = `${baseuri}/graphql`;
 const link = new HttpLink({
-  uri: uri,
+  uri: 'http://localhost:4000/graphql'
 });
 
 const apollo = new ApolloClient({
@@ -37,8 +36,7 @@ function configureStore(initialState = {apollo: apollo}) {
   const store = createStore(
     reducer,
     {...initialState},
-    // reduxDevTools(...enhancers)
-    ...enhancers
+    reduxDevTools(...enhancers)
   );
 
   return store;
