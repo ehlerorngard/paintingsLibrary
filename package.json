@@ -5,13 +5,13 @@
   "engines": {
     "node": "10.15.3"
   },
-  "main": "server/app.js",
+  "main": "app.js",
   "proxy": "https://paintings-library.herokuapp.com/",
   "scripts": {
-    "server": "node server/app.js",
-    "client": "concurrently \"node server/start.js\" \"npm run client\"",
-    "start": "node start.js",
-    "build": "node build.js",
+    "server": "nodemon app.js",
+    "client": "react-scripts start",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "installDeps": "yarn && cd client && yarn && cd ../server && yarn"
   },
@@ -46,5 +46,17 @@
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "mongoose": "^5.7.13"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

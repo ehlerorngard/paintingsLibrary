@@ -1,12 +1,14 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost'
+import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
 import reducer from "./utils/reducer.js";
-import queries from './utils/queries.js'
-
+import queries from './utils/queries.js';
 
 const cache = new InMemoryCache();
+console.log('in configureStore, NODE_ENV:', process.env.NODE_ENV);
+const baseuri = (process.env.NODE_ENV === 'production') ? 'https://paintings-library.herokuapp.com' : 'http://localhost:4000';
+const uri = `${baseuri}/graphql`;
 const link = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
+  uri: uri,
 });
 
 const apollo = new ApolloClient({
@@ -19,7 +21,6 @@ apollo.query({query: queries.getPaintings}).then(result => {
 })
 
 function configureStore(initialState = {apollo: apollo}) {
-
   const enhancers = [
     // applyMiddleware(apollo.middleware),
   ];
@@ -36,7 +37,8 @@ function configureStore(initialState = {apollo: apollo}) {
   const store = createStore(
     reducer,
     {...initialState},
-    reduxDevTools(...enhancers)
+    // reduxDevTools(...enhancers)
+    ...enhancers
   );
 
   return store;
