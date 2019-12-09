@@ -6,7 +6,6 @@
     "node": "10.15.3"
   },
   "main": "app.js",
-  "proxy": "https://paintings-library.herokuapp.com/",
   "scripts": {
     "server": "nodemon app.js",
     "client": "react-scripts start",
