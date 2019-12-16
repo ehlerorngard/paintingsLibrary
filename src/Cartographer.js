@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import { updateStore } from "./utils/actions.js";
+import { updateStore, getArtists, getPaintings } from "./utils/actions.js";
 import { client } from './configureStore';
 
 
@@ -15,6 +15,11 @@ class Cartographer extends Component {
   componentDidMount() {
     this.getScreenSize();
     this.handleScroll();
+    this.hideOptionBar();
+    this.setInitialProps();
+    getPaintings(this.props.dispatch)
+    getArtists(this.props.dispatch)
+    setTimeout(() => console.log(this.props), 5000)
     window.addEventListener("resize", this.getScreenSize, true);
     window.addEventListener("scroll", this.handleScroll, true);
   }
@@ -43,13 +48,22 @@ class Cartographer extends Component {
     updateStore(scrolllocation)(this.props.dispatch);
   }
 
-  showSidebar = () => {
-    updateStore({ sidebarVisible: true })(this.props.dispatch);
+  showOptionBar = () => {
+    updateStore({ optionBarOpen: true })(this.props.dispatch);
   }
 
-  hideSidebar = () => {
-    console.log("hiding sidebar....")
-    updateStore({ sidebarVisible: false })(this.props.dispatch);
+  hideOptionBar = () => {
+    updateStore({ optionBarOpen: false })(this.props.dispatch);
+  }
+
+  setInitialProps = () => {
+    updateStore({ 
+      view: 'view_paintings',
+      selected_artist: '',
+      selected_painting: '',
+      snackbarColor: '',
+      snackbarMessage: '',
+    })(this.props.dispatch);
   }
 
   renderPresentPanel = () => {
@@ -64,7 +78,7 @@ class Cartographer extends Component {
   render() {
 
     return (
-      <div className="cartographer">
+      <div className="cartographer noscroll">
         <BrowserRouter >
           <Switch>
             <Route Route exact path="/" component={Paintings} />
@@ -91,6 +105,7 @@ const mapStateToProps = (state) => {
     scrolledToTop: state.scrolledToTop,
     screenSize: state.screenSize,
     apollo: state.apollo,
+    paintings: state.paintings,
   }
 }
 

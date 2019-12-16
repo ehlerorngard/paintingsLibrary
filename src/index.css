@@ -11,10 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+#root {
+  height: 100vh;
+  width:  100vw;
+  overflow: hidden;
+}
 .App {
   text-align: center;
   font-family: 'Montserrat', sans-serif;
+  height: 100%;
+  width:  100%;
+  overflow: hidden;
 }
 
 .header {
@@ -164,7 +171,7 @@ code {
 .paintingsMain {
 	width: 100%;
 	height: 75%;
-	overflow-y: auto;
+	/* overflow-y: auto; */
 }
 .paintingListMain {
 	width: 100%;
@@ -183,4 +190,46 @@ code {
 }
 .index {
 	max-height: 75vh !important;
+}
+.OptionBar {
+	position: fixed;
+	width: 200px;
+	height: 100vh;
+	box-shadow: 3px 3px 14px 20px rgba(0, 0, 0, 0.24);
+}
+.option {
+	min-height: 40px;
+	width: 100%;
+	color: rgb(66,68,77);
+	font-size: 20px;
+	transition: color .2s;
+}
+.option:hover {
+	cursor: pointer;
+	color: black;
+}
+.center {
+	margin:  auto;
+}
+.margin20 {
+	margin: 20px;
+}
+.bottom {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+}
+.hundred {
+	width: 100%;
+	height: 100%;
+}
+.editIcon {
+	background-color:  rgba(255, 255, 255, 0.6);
+	border-radius: 6px;
+}
+.editIcon:hover {
+	background-color:  rgba(288, 288, 288, 0.6);
+}
+.noscroll {
+	overflow: hidden;
 }

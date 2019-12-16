@@ -36,6 +36,15 @@ export default {
 			}
 		}`,
 
+	getPainting: gql`
+		query($id: ID){
+			painting(id: $id){
+				id
+				originalTitle
+				year
+			}
+		}`,
+
 	getArtist: gql`
 		query($id: ID){
 			id
@@ -57,7 +66,7 @@ export default {
 		}`,
 
 	addPainting: gql`
-		mutation($englishTitle: String!, $originalTitle: String, $year: Int, $permanentResidence: String, $currentOwner: String, $artistId: ID){
+		mutation($englishTitle: String!, $originalTitle: String!, $year: Int, $permanentResidence: String, $currentOwner: String, $artistId: ID){
 			addPainting(englishTitle: $englishTitle, originalTitle: $originalTitle, year: $year, permanentResidence: $permanentResidence, currentOwner: $currentOwner, artistId: $artistId){
 				id
 				englishTitle

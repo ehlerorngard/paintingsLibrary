@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { updateStore, getPaintings } from "../utils/actions.js";
-
+import EditIcon from '@material-ui/icons/Edit';
 
 class PaintingList extends Component {
 	constructor(props) {
@@ -16,7 +16,9 @@ class PaintingList extends Component {
 	}
 
 	select = (pId) => {
-		updateStore({ selected_painting: pId })(this.props.dispatch)
+		if (pId !== this.props.selected_painting) {
+			updateStore({ selected_painting: pId, editingPainting: false })(this.props.dispatch)
+		}
 	}
 
 	displayPaintings = () => {
@@ -46,6 +48,10 @@ class PaintingList extends Component {
 			? { fontSize: '2rem', transition: 'font-size .25s'}
 			: { fontSize: '1.5rem', transition: 'font-size .25s'}
 
+		const editIcon = (pId) => (this.props.selected_painting === pId)
+			? { height: '60px', transition: 'height .25s'}
+			: { visibility: 'hidden', height: '0px', transition: 'height .25s'}
+
 		return (
 			<div className="paintingListMain">
 				<div  className="vertSpace" />
@@ -54,16 +60,19 @@ class PaintingList extends Component {
 					? <div className="italics">l o a d i n g <br/><br/> p a i n t i n g s . . .</div>
 					: this.props.paintings.map(ptn => (
 						<div key={ptn.id} value={ptn.id} className="paintingBox" onClick={e => this.select(ptn.id)}>
-							<div style={textB(ptn.id)} className='clickable_text'>{ptn.englishTitle}</div>
-							<div style={textA(ptn.id)} className="italics clickable_text">{ptn.originalTitle}</div>
-							<div style={textA(ptn.id)} className='clickable_text'>{ptn.year}</div>
-							<div style={textA(ptn.id)} className='clickable_text'>{ptn.permanentResidence}</div>
-							<div style={textA(ptn.id)} className="Oswald clickable_text">{ptn.artist.firstName} {ptn.artist.lastName}</div>
+							{(ptn.englishTitle) ? <div style={textB(ptn.id)} className='clickable_text'>{ptn.englishTitle}</div> : null}
+							{(ptn.originalTitle) ? <div style={textA(ptn.id)} className="italics clickable_text">{ptn.originalTitle}</div> : null}
+							{(ptn.year) ? <div style={textA(ptn.id)} className='clickable_text'>{ptn.year}</div> : null}
+							{(ptn.permanentResidence) ? <div style={textA(ptn.id)} className='clickable_text'>{ptn.permanentResidence}</div> : null}
+							{(ptn.artist && ptn.artist.firstName) ? <div style={textA(ptn.id)} className="Oswald clickable_text">{ptn.artist.firstName} {ptn.artist.lastName}</div> : null}
 							<div  className="vertSpace" />
 						</div>
 					))
 				}
 				</div>
+				<div className="vertSpace" />
+				<div className="vertSpace" />
+				<div className="vertSpace" />
 			</div>
 		)
 	}

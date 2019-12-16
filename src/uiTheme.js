@@ -1,21 +1,21 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { lightGreen, amber, cyan, indigo, purple, blueGrey } from '@material-ui/core/colors';
+import { lightGreen, amber, cyan, teal, grey, indigo, purple, blueGrey } from '@material-ui/core/colors';
 
 // Customize theme to pervade all (and specified 
 // individual) Material-UI components:
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: blueGrey[300],
-      main: blueGrey[500],
-      dark: blueGrey[800],
-      contrastText: cyan['A100'],
+      light: 'rgba(255, 193, 7, .5)',
+      main: 'rgba(255, 193, 7, .8)',
+      dark: 'rgba(255, 193, 7, 1)',
+      contrastText: 'rgba(9, 51, 113, 1)',
     },
     secondary: {
-      light: purple[500],
-      main: purple[700],
-      dark: purple[900],
-      contrastText: indigo['100'], 
+      light: 'rgb(27,78,139, .5)',
+      main: 'rgb(27,78,139, .8)',
+      dark: 'rgb(27,78,139, 1)',
+      contrastText: 'white', 
     },
   },
   props: {
@@ -38,12 +38,18 @@ const theme = createMuiTheme({
       text: {
         fontSize: '20px',
         fontWeight: 700,
-      }
+      },
+      root: {
+        margin: '20px',
+      },
     },
     MuiSelect: {
       select: {
         maxWidth: 300,
       }
+    },
+    MuiPaper: {
+
     },
     MuiGridList: {
       root: {
@@ -65,7 +71,8 @@ const theme = createMuiTheme({
     },
     MuiTextField: {
       root: {
-        maxWidth: 104,
+        maxWidth: 340,
+        margin: '12px'
       }
     },
     MuiTooltip: {
@@ -86,8 +93,8 @@ const theme = createMuiTheme({
     },
     MuiOutlinedInput: {
       inputMarginDense: {
-        minWidth: "90px",
-        maxWidth: "156px",
+        minWidth: "200px",
+        maxWidth: "300px",
       },
     },
     MuiDialogActions: {
@@ -95,6 +102,11 @@ const theme = createMuiTheme({
         margin: "24px",
       }
     },
+    MuiFormControl: {
+      root: {
+        maxWidth: '300px'
+      }
+    }
   },
   typography: { 
     fontFamily: '"Montserrat", "Roboto", "Arial", sans',

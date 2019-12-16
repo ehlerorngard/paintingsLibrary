@@ -112,6 +112,38 @@ const Mutation = new GraphQLObjectType({
 				return painting.save()
 			}
 		},
+		updatePainting: { 
+			type: PaintingType,
+			args: {
+				id: { type: GraphQLID },
+				year: { type: GraphQLInt },
+				originalTitle: { type: GraphQLString },
+				englishTitle: { type: GraphQLString },
+				permanentResidence: { type: GraphQLString },
+				currentOwner: { type: GraphQLString },
+				medium: { type: GraphQLString },
+				artistId: { type: GraphQLID },
+			},
+			resolve(parent, args) {
+
+				const callback = () => {
+					// return Painting.find()
+					return Painting.findById(args.id)
+				}
+
+				Painting.updateOne({ _id: args.id }, {
+					year: args.year,
+					originalTitle: args.originalTitle,
+					englishTitle: args.englishTitle,
+					permanentResidence: args.permanentResidence,
+					currentOwner: args.currentOwner,
+					medium: args.medium,
+					artistId: args.artistId,
+				}, {}, callback);
+
+				return Painting.findById(args.id)
+			}
+		},
 	})
 })
 

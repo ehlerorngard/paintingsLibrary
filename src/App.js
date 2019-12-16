@@ -11,7 +11,7 @@ import Cartographer from './Cartographer.js'
 function App() {
   return (
     <Provider store={configureStore()}>
-      <div className="App">
+      <div className="App noscroll">
         <MuiThemeProvider theme={theme}>
           <Cartographer />
         </MuiThemeProvider>
