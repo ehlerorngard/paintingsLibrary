@@ -17,7 +17,16 @@ class PaintingList extends Component {
 
 	select = (pId) => {
 		if (pId !== this.props.selected_painting) {
-			updateStore({ selected_painting: pId, editingPainting: false })(this.props.dispatch)
+			updateStore({ selected_painting: pId, 
+				editingPainting: false,
+				englishTitle: '',
+				originalTitle: '',
+				year: '',
+				permanentResidence: '',
+				medium: '',
+				currentOwner: '',
+				selected_artist: '',
+			})(this.props.dispatch)
 		}
 	}
 

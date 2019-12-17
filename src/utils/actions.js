@@ -17,7 +17,7 @@ export const updateStore = (chicken) => (dispatch) => {
 // ===============================================
 // ===== update database, then store: ============
 // ===============================================
-export const getPaintings = (dispatch) => {
+const getPaintings2 = (dispatch) => {
 	console.log('getting all paintings...')
 	return apollo.query({query: queries.getPaintings})
 		.then(response => {
@@ -28,6 +28,7 @@ export const getPaintings = (dispatch) => {
 			});
 		});
 }
+export function getPaintings(dispatch) { return getPaintings2(dispatch) }
 
 export const getPainting = (vars) => (dispatch) => {
 	return apollo.query({ query: queries.getPainting, variables: vars })
@@ -58,11 +59,13 @@ export const modifyPainting = (data, paintings) => (dispatch) => {
 			})[0];
 			let ptns = [...paintings]
 			ptns[index] = response.data.updatePainting;
-			dispatch({
-				type: "UPDATE_STORE",
-				payload: Object.assign({}, {paintings: ptns}),
-			});
-			setTimeout(() => getPaintings(dispatch), 500);
+
+			// dispatch({
+			// 	type: "UPDATE_STORE",
+			// 	payload: Object.assign({}, {paintings: ptns}),
+			// });
+
+			// setTimeout(() => getPaintings(dispatch), 500);
 		});
 }
 
@@ -74,4 +77,70 @@ export const getArtists = (dispatch) => {
 				payload: Object.assign({}, response.data),
 			});
 		});
+}
+
+// ==========
+//  ALT EXPORT 
+
+export default {
+	getPaintings: (client) => (dispatch) => {
+		console.log('getting all paintings... from DEFAULT')
+		client.query({query: queries.getPaintings})
+			.then(response => {
+				console.log('getAll response: ', response.data)
+				dispatch({
+					type: "UPDATE_STORE",
+					payload: Object.assign({}, response.data),
+				});
+			});
+	},
+
+	getPainting: (vars) => (dispatch) => {
+		return apollo.query({ query: queries.getPainting, variables: vars })
+			.then(response => {
+				dispatch({
+					type: "UPDATE_STORE",
+					payload: Object.assign({}, response.data),
+				});
+			});
+	},
+
+	addPainting: (data, paintings) => (dispatch) => {
+		return apollo.mutate({mutation: queries.addPainting, variables: data })
+			.then(response => {
+				dispatch({
+					type: "UPDATE_STORE",
+					payload: Object.assign({}, {paintings: [...paintings, response.data]}),
+				});
+			});
+	},
+
+	modifyPainting: (data, paintings) => (dispatch) => {
+		return apollo.mutate({mutation: queries.updatePainting, variables: data })
+			.then(response => {
+				console.log('modify response', response.data)
+				const index = paintings.filter((p, i) => {
+					if (p.id === data.id) return i
+				})[0];
+				let ptns = [...paintings]
+				ptns[index] = response.data.updatePainting;
+
+				// dispatch({
+				// 	type: "UPDATE_STORE",
+				// 	payload: Object.assign({}, {paintings: ptns}),
+				// });
+
+				// setTimeout(() => getPaintings(dispatch), 500);
+			});
+	},
+
+	getArtists: (dispatch) => {
+		return apollo.query({query: queries.getArtists})
+			.then(response => {
+				dispatch({
+					type: "UPDATE_STORE",
+					payload: Object.assign({}, response.data),
+				});
+			});
+	},
 }

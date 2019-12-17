@@ -4,7 +4,7 @@ import { RetryLink } from 'apollo-link-retry';
 import reducer from "./utils/reducer.js";
 import queries from './utils/queries.js';
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({fetchPolicy: 'no-cache'});
 const baseuri = (process.env.NODE_ENV === 'production') ? 'https://paintings-library.herokuapp.com' : 'http://localhost:4000';
 const uri = `${baseuri}/graphql`;
 const link = new ApolloLink.from([
@@ -17,7 +17,15 @@ const link = new ApolloLink.from([
 const apollo = new ApolloClient({
   cache,
   link,
+  defaultOptions: {
+    query: {
+      fetchPolicy: "no-cache"
+    }
+  }, // otherwise Apollo caches and reuses the original response from a getAll() query
+  queryDeduplication: false,
 })
+
+
 
 function configureStore(initialState = {apollo: apollo}) {
   const enhancers = [

@@ -8,6 +8,7 @@ export default {
 				englishTitle
 				originalTitle
 				year
+				medium
 				permanentResidence
 				currentOwner
 				artist{
@@ -78,8 +79,8 @@ export default {
 		}`,
 
 	updatePainting: gql`
-		mutation($id: ID, $englishTitle: String!, $originalTitle: String, $year: Int, $permanentResidence: String, $currentOwner: String, $artistId: ID){
-			updatePainting(id: $id, englishTitle: $englishTitle, originalTitle: $originalTitle, year: $year, permanentResidence: $permanentResidence, currentOwner: $currentOwner, artistId: $artistId){
+		mutation($id: ID, $englishTitle: String!, $originalTitle: String, $year: Int, $permanentResidence: String, $currentOwner: String, $medium: String, $artistId: ID){
+			updatePainting(id: $id, englishTitle: $englishTitle, originalTitle: $originalTitle, year: $year, permanentResidence: $permanentResidence, currentOwner: $currentOwner, medium: $medium artistId: $artistId){
 				id
 				englishTitle
 				originalTitle

@@ -8,6 +8,7 @@ import { OutlinedInput, TextField, Paper, Typography, Button } from '@material-u
 import { withStyles, withTheme, makeStyles } from '@material-ui/core/styles';
 import styles from '../styles.js'
 import EditIcon from '@material-ui/icons/Edit';
+import actions from "../utils/actions.js";
 
 
 class ModifyPainting extends Component {
@@ -21,6 +22,7 @@ class ModifyPainting extends Component {
 					originalTitle: painting[0].originalTitle,
 					year: painting[0].year,
 					permanentResidence: painting[0].permanentResidence,
+					medium: painting[0].medium,
 					currentOwner: painting[0].currentOwner,
 					selected_artist: art,
 				})(this.props.dispatch)
@@ -61,7 +63,16 @@ class ModifyPainting extends Component {
 		list.forEach(key => obj[key] = '')
 		updateStore(obj)(this.props.dispatch)
 	}
-
+	updateClient = (data, listkey) => {
+		console.log('updating client state..', data, listkey)
+		let ptns = this.props[listkey].map(ptn => {
+			if (ptn.id === data.id) {
+				return data
+			} else return ptn
+		})
+		console.log('ptns ready to update store', ptns)
+		updateStore({ [listkey]: ptns })(this.props.dispatch)
+	}
 	submitPainting = () => {
 		console.log('submitting painting!', this.props)
 		if (this.validatePainting()) {
@@ -69,6 +80,7 @@ class ModifyPainting extends Component {
 				id: this.props.selected_painting,
 				englishTitle: this.props.englishTitle,
 				originalTitle: this.props.originalTitle,
+				medium: this.props.medium,
 				year: parseInt(this.props.year),
 				permanentResidence: this.props.permanentResidence,
 				currentOwner: this.props.currentOwner,
@@ -77,9 +89,10 @@ class ModifyPainting extends Component {
 				data.artistId = this.props.selected_artist
 			}
 
+			this.updateClient(data, 'paintings')
 			modifyPainting(data, this.props.paintings)(this.props.dispatch)
 			this.clearFields()
-			getPaintings(this.props.dispatch)
+			setTimeout(() => actions.getPaintings(this.props.apollo)(this.props.dispatch), 5000)
 			updateStore({ view: 'view_paintings' })(this.props.dispatch)
 		}
 	}
@@ -121,9 +134,9 @@ class ModifyPainting extends Component {
 			          onChange={this.handleChange}
 			        />
 					<TextInput
-			          label="Current Owner"
-			          value={this.props.currentOwner}
-			          name="currentOwner"
+			          label="Medium"
+			          value={this.props.medium}
+			          name="medium"
 			          onChange={this.handleChange}
 			        />
 				</div>
@@ -164,12 +177,14 @@ const mapStateToProps = (state) => {
     optionBarOpen: state.optionBarOpen,
     englishTitle: state.englishTitle,
     originalTitle: state.originalTitle,
+    medium: state.medium,
     year: state.year,
     permanentResidence: state.permanentResidence,
     currentOwner: state.currentOwner,
     classes: state.classes,
     selected_artist: state.selected_artist,
     artists: state.artists,
+    apollo: state.apollo,
   }
 }
 

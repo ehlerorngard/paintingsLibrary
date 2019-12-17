@@ -1,4 +1,4 @@
-const graphql = require('graphql')
+const graphql = require('graphql');
 const { 
 	GraphQLObjectType, 
 	GraphQLString, 
@@ -6,9 +6,10 @@ const {
 	GraphQLID, 
 	GraphQLNonNull,
 	GraphQLList, 
-	GraphQLSchema } = graphql
-const Artist = require('../models/artist.js')
-const Painting = require('../models/painting.js')
+	GraphQLSchema } = graphql;
+const Artist = require('../models/artist.js');
+const Painting = require('../models/painting.js');
+const triggerEvent = require('../monitoring/monitor.js');
 
 
 
@@ -25,7 +26,60 @@ const artists = [
 	{firstName: 'Pablo', lastName: 'Picasso', birthDate: '25 October, 1881', id: '19', birthPlace: 'Málaga, Spain',},
 ]
 
+// ============================================
+// === Error handling and event monitoring ====
+// ============================================
+function callbackToFind(err, res) {
+	if (err) {
+		console.error(err);
+		triggerEvent({...err, component: 'schema', severity: 'info'});
+	}
+	else if (!res) {
+		console.log(`ERROR: \n DataNotFoundError \n Query tried to find a painting with an id that does not exist in the database \n badObjectId`)
+		triggerEvent({
+			name: "DataNotFoundError",
+			message: "Query tried to find an object with an id that does not exist in the database",
+			kind: "badObjectId",
+			component: 'schema', 
+			severity: 'info',
+		});
+	}
+	else {
+		console.log('found painting:\n', res);
+	}
+}
 
+function callbackToUpdate(err, res) {
+	if (err) {
+		console.error(err);
+		triggerEvent({...err, component: 'schema', severity: 'info'});
+	}
+	else if (!res) {
+		console.log(`ERROR: \n DataNotFoundError \n Query tried to update an object with an id that does not exist in the database \n badObjectId`);
+		triggerEvent({
+			name: "DataNotFoundError",
+			message: "Query tried to update an object with an id that does not exist in the database",
+			kind: "badObjectId",
+			component: 'schema', 
+			severity: 'info',
+		});
+	}
+	else {
+		console.log('Update callback res:\n', res);
+	}
+}
+
+function customError(char) {
+	console.log('Custom error, found', char);
+	triggerEvent({
+		name: "Unpermitted character",
+		message: `An update request tried to update an object with a character (${char}) that is not allowed`,
+		kind: "Unpermitted character",
+		component: 'schema', 
+		severity: 'info',
+	});
+	// throw new Error(`${char} not permitted`);
+}
 
 // =======================
 // == DATA TYPES =========
@@ -43,12 +97,13 @@ const PaintingType = new GraphQLObjectType({
 		artist: {
 			type: ArtistType,
 			resolve(parent, args){
-				console.log("looking for the artist of painting", parent.englishTitle)
+				// console.log("looking for the artist of painting", parent.englishTitle)
+				
 				return Artist.findById(parent.artistId)
 			}
 		}
 	})
-})
+});
 
 const ArtistType = new GraphQLObjectType({
 	name: 'Artist', 
@@ -65,7 +120,7 @@ const ArtistType = new GraphQLObjectType({
 			}
 		},
 	})
-})
+});
 
 
 const Mutation = new GraphQLObjectType({
@@ -124,14 +179,11 @@ const Mutation = new GraphQLObjectType({
 				medium: { type: GraphQLString },
 				artistId: { type: GraphQLID },
 			},
-			resolve(parent, args) {
-
-				const callback = () => {
-					// return Painting.find()
-					return Painting.findById(args.id)
+			async resolve(parent, args) {
+				if (args.medium && args.medium.indexOf('#') > -1) {
+					return customError('#');
 				}
-
-				Painting.updateOne({ _id: args.id }, {
+				return Painting.updateOne({ _id: args.id }, {
 					year: args.year,
 					originalTitle: args.originalTitle,
 					englishTitle: args.englishTitle,
@@ -139,13 +191,11 @@ const Mutation = new GraphQLObjectType({
 					currentOwner: args.currentOwner,
 					medium: args.medium,
 					artistId: args.artistId,
-				}, {}, callback);
-
-				return Painting.findById(args.id)
+				});
 			}
 		},
 	})
-})
+});
 
 
 // =======================
@@ -153,12 +203,14 @@ const Mutation = new GraphQLObjectType({
 // =======================
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQueryType',
-	fields: {
+	fields: () => ({
 		painting: {
 			type: PaintingType,
 			args: { id: {type: GraphQLID} },
 			resolve(parent, args) {
-				return Painting.findById(args.id)
+				return Painting.findById(args.id, function(err, ptn) {
+					callbackToFind(err, ptn)
+				})
 			}
 		},
 		artist: {
@@ -180,11 +232,11 @@ const RootQuery = new GraphQLObjectType({
 				return Artist.find()
 			}
 		},
-	}
-})
+	})
+});
 
 
 module.exports = new GraphQLSchema({
 	query: RootQuery,
 	mutation: Mutation,
-})
+});
